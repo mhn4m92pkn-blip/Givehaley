@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Một lá thư nhỏ 💌</title>
+<style>
+  :root { --pink:#f6a9bc; --rose:#d96f91; --cream:#fff8f1; --ink:#754858; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; min-height:100svh; overflow:hidden; font-family: Georgia, "Times New Roman", serif;
+    color:var(--ink); background:radial-gradient(circle at 20% 15%,#fff9f2 0 8%,transparent 9%),
+    linear-gradient(145deg,#ffe9ee,#fff4e8 55%,#f9dce7);
+    display:flex; align-items:center; justify-content:center; padding:22px;
+  }
+  .glow { position:fixed; inset:0; pointer-events:none; opacity:.6;
+    background-image:radial-gradient(#fff 1.5px,transparent 1.5px); background-size:27px 27px; }
+  .wrap { width:min(100%,440px); text-align:center; position:relative; z-index:1; }
+  .eyebrow { font: 12px/1.4 Arial,sans-serif; letter-spacing:3px; text-transform:uppercase; color:#bd6f88; }
+  h1 { font-size:clamp(28px,8vw,38px); font-weight:normal; margin:12px 0 8px; }
+  .subtitle { font:14px Arial,sans-serif; color:#a66c7d; margin:0 0 26px; }
+  .scene { height:300px; position:relative; display:flex; justify-content:center; align-items:center; perspective:1000px; }
+  .envelope {
+    width:min(86vw,340px); height:205px; position:relative; cursor:pointer; border:0; background:transparent;
+    filter:drop-shadow(0 16px 15px #b86c8430); -webkit-tap-highlight-color:transparent;
+  }
+  .env-back { position:absolute; inset:0; background:#f3a6bb; border-radius:8px; }
+  .letter {
+    position:absolute; left:7%; width:86%; height:88%; top:4%; padding:23px 12px;
+    background:#fffdf8; border:1px solid #f5d6d9; border-radius:5px; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; transition:transform .8s cubic-bezier(.2,.8,.2,1), top .8s;
+    z-index:2; box-shadow:0 2px 8px #a95e7220;
+  }
+  .letter .tiny { font-size:23px; color:#d77c99; margin-bottom:8px; }
+  .letter p { font-size:18px; margin:4px 0; }
+  .letter .sign { font-size:16px; font-style:italic; margin-top:12px; }
+  .pocket {
+    position:absolute; inset:0; z-index:3; border-radius:8px; overflow:hidden;
+    background:linear-gradient(145deg,#f9c4d0,#ee91ac);
+    clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);
+  }
+  .flap {
+    position:absolute; z-index:4; top:0; left:0; width:100%; height:62%;
+    background:#f7b4c5; clip-path:polygon(0 0,100% 0,50% 100%);
+    transform-origin:top; transition:transform .7s ease; filter:drop-shadow(0 2px 1px #cc7890);
+  }
+  .seal {
+    position:absolute; z-index:5; left:50%; top:52%; transform:translate(-50%,-50%);
+    width:48px; height:48px; border-radius:50%; background:#cf6686; color:white; display:grid; place-items:center;
+    font-size:24px; box-shadow:0 4px 10px #a34f6c55; transition:opacity .3s;
+  }
+  .hint { font:13px Arial,sans-serif; letter-spacing:.3px; color:#a66c7d; margin-top:4px; }
+  .opened .flap { transform:rotateX(180deg); z-index:1; }
+  .opened .seal { opacity:0; }
+  .opened .letter { top:-28%; transform:translateY(-12px); }
+  .opened .pocket { z-index:3; }
+  .letter-full {
+    display:none; text-align:left; background:#fffdf8; border:1px solid #f3d5dc; border-radius:14px;
+    padding:24px 22px; margin:-3px 0 14px; box-shadow:0 12px 35px #b86c8425; animation:rise .6s ease both;
+  }
+  .letter-full h2 { text-align:center; font-size:24px; font-weight:normal; margin:0 0 18px; }
+  .letter-full p { font-size:18px; line-height:1.7; margin:0 0 12px; }
+  .letter-full .signature { text-align:right; font-style:italic; margin-top:18px; color:#c25e80; }
+  .opened .letter-full { display:block; }
+  .opened .scene { height:180px; }
+  .opened .envelope { transform:scale(.72); }
+  .opened h1 { font-size:27px; }
+  .opened .subtitle { display:none; }
+  button.again { border:1px solid #df9aaf; background:#fff7f8; color:#a65470; border-radius:999px; padding:12px 20px; font:14px Arial,sans-serif; cursor:pointer; }
+  .heart { position:fixed; bottom:-30px; font-size:18px; color:#e98ba7; animation:float 6s linear infinite; opacity:.7; pointer-events:none; }
+  @keyframes float { to { transform:translateY(-110vh) rotate(35deg); opacity:0; } }
+  @keyframes rise { from {opacity:0; transform:translateY(18px)} to {opacity:1; transform:translateY(0)} }
+  @media(max-height:720px) { .scene {height:240px} .envelope{height:175px} .opened .scene{height:125px} .letter-full{padding:18px} }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<main class="wrap" id="card">
+  <div class="eyebrow">a little note for you</div>
+  <h1>Một lá thư nhỏ 💌</h1>
+  <p class="subtitle">Có điều này muốn hỏi chị nè...</p>
+  <section class="scene">
+    <button class="envelope" id="envelope" aria-label="Mở phong thư">
+      <div class="env-back"></div>
+      <div class="letter">
+        <div class="tiny">♡</div>
+        <p>Gửi chị,</p><p style="font-size:13px;color:#bd8294">mở thư nhé...</p>
+      </div>
+      <div class="pocket"></div><div class="flap"></div><div class="seal">♡</div>
+    </button>
+  </section>
+  <p class="hint" id="hint">Chạm vào phong thư để mở ✨</p>
+  <article class="letter-full">
+    <h2>Dear chị, 🌷</h2>
+    <p>Chị muốn làm cái này gửi ai đó không?</p>
+    <p>Một người thương chẳng hạn kkk 💗</p>
+    <p class="signature">Ký tên,<br><strong>Miami</strong> ♡</p>
+  </article>
+  <button class="again" id="again" style="display:none">Gấp thư lại 💌</button>
+</main>
+<script>
+  const card = document.getElementById('card');
+  const envelope = document.getElementById('envelope');
+  const hint = document.getElementById('hint');
+  const again = document.getElementById('again');
+  function toggle(open) {
+    card.classList.toggle('opened', open);
+    hint.textContent = open ? 'Một lời nhắn nhỏ dành cho chị 💗' : 'Chạm vào phong thư để mở ✨';
+    again.style.display = open ? 'inline-block' : 'none';
+  }
+  envelope.addEventListener('click', () => toggle(!card.classList.contains('opened')));
+  again.addEventListener('click', () => toggle(false));
+  for(let i=0;i<9;i++){
+    const h=document.createElement('span'); h.className='heart'; h.textContent=['♡','♥','✦'][i%3];
+    h.style.left=(5+Math.random()*90)+'%'; h.style.animationDelay=(Math.random()*5)+'s';
+    h.style.animationDuration=(5+Math.random()*4)+'s'; document.body.appendChild(h);
+  }
+</script>
+</body>
+</html>
